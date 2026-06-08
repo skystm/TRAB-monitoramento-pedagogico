@@ -89,39 +89,301 @@ public class Main {
     // ==================== OPERAÇÕES (a implementar) ====================
 
     static void cadastrarAluno() {
-        System.out.println("[em breve] Cadastrar aluno");
+        // Verifica se ainda há espaço no vetor
+        if (totalAlunos >= MAX) {
+            System.out.println("Limite de alunos atingido.");
+            return;
+        }
+
+        System.out.println("\n--- Cadastrar Aluno ---");
+
+        System.out.print("Nome: ");
+        String nome = sc.nextLine().trim();
+
+        System.out.print("Idade: ");
+        int idade;
+        try {
+            idade = Integer.parseInt(sc.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Idade inválida.");
+            return;
+        }
+
+        System.out.print("Local de nascimento: ");
+        String localNascimento = sc.nextLine().trim();
+
+        System.out.print("Curso: ");
+        String curso = sc.nextLine().trim();
+
+        System.out.print("Matrícula: ");
+        String matricula = sc.nextLine().trim();
+
+        // Validação: matrícula duplicada
+        for (int i = 0; i < totalAlunos; i++) {
+            if (alunos[i].getMatricula().equals(matricula)) {
+                System.out.println("Matrícula já cadastrada.");
+                return;
+            }
+        }
+
+        System.out.print("Semestre: ");
+        int semestre;
+        try {
+            semestre = Integer.parseInt(sc.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Semestre inválido.");
+            return;
+        }
+
+        System.out.print("Ano: ");
+        int ano;
+        try {
+            ano = Integer.parseInt(sc.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Ano inválido.");
+            return;
+        }
+
+        System.out.print("É bolsista de IC? (s/n): ");
+        boolean bolsistaIC = sc.nextLine().trim().equalsIgnoreCase("s");
+
+        // Cria os objetos usando composição: Pessoa dentro de Aluno
+        Pessoa pessoa = new Pessoa(nome, idade, localNascimento);
+        Aluno aluno = new Aluno(pessoa, curso, matricula, semestre, ano, bolsistaIC);
+
+        // Insere no vetor na próxima posição disponível
+        alunos[totalAlunos] = aluno;
+        totalAlunos++;
+
+        System.out.println("Aluno cadastrado com sucesso!");
     }
 
     static void cadastrarBolsistaIC() {
-        System.out.println("[em breve] Cadastrar bolsista de IC");
+        // Validação: precisa ter pelo menos um aluno cadastrado
+        if (totalAlunos == 0) {
+            System.out.println("Nenhum aluno cadastrado. Cadastre um aluno primeiro.");
+            return;
+        }
+
+        if (totalBolsistas >= MAX) {
+            System.out.println("Limite de bolsistas atingido.");
+            return;
+        }
+
+        System.out.println("\n--- Cadastrar Bolsista de IC ---");
+        System.out.print("Matrícula do aluno: ");
+        String matricula = sc.nextLine().trim();
+
+        // Busca o aluno pela matrícula no vetor
+        Aluno alunoEncontrado = null;
+        for (int i = 0; i < totalAlunos; i++) {
+            if (alunos[i].getMatricula().equals(matricula)) {
+                alunoEncontrado = alunos[i];
+                break;
+            }
+        }
+
+        // Validação: não permite cadastrar bolsista para aluno inexistente
+        if (alunoEncontrado == null) {
+            System.out.println("Aluno não encontrado.");
+            return;
+        }
+
+        System.out.print("Nome do projeto: ");
+        String projeto = sc.nextLine().trim();
+
+        System.out.print("Nome do orientador: ");
+        String orientador = sc.nextLine().trim();
+
+        // Cria o bolsista com composição: BolsistaIC "tem um" Aluno
+        BolsistaIC bolsista = new BolsistaIC(alunoEncontrado, projeto, orientador);
+        bolsistas[totalBolsistas] = bolsista;
+        totalBolsistas++;
+
+        // Atualiza o flag no objeto Aluno também
+        alunoEncontrado.setBolsistaIC(true);
+
+        System.out.println("Bolsista de IC cadastrado com sucesso!");
     }
 
     static void registrarAcompanhamento() {
-        System.out.println("[em breve] Registrar acompanhamento");
+        if (totalAlunos == 0) {
+            System.out.println("Nenhum aluno cadastrado. Cadastre um aluno primeiro.");
+            return;
+        }
+
+        if (totalAcompanhamentos >= MAX) {
+            System.out.println("Limite de acompanhamentos atingido.");
+            return;
+        }
+
+        System.out.println("\n--- Registrar Acompanhamento de IA ---");
+        System.out.print("Matrícula do aluno: ");
+        String matricula = sc.nextLine().trim();
+
+        // Busca o aluno pela matrícula
+        Aluno alunoEncontrado = null;
+        for (int i = 0; i < totalAlunos; i++) {
+            if (alunos[i].getMatricula().equals(matricula)) {
+                alunoEncontrado = alunos[i];
+                break;
+            }
+        }
+
+        if (alunoEncontrado == null) {
+            System.out.println("Aluno não encontrado.");
+            return;
+        }
+
+        System.out.println("Aluno: " + alunoEncontrado.getPessoa().getNome());
+
+        try {
+            System.out.print("Quantidade de atividades entregues: ");
+            int entregues = Integer.parseInt(sc.nextLine().trim());
+
+            System.out.print("Quantidade de atividades com uso declarado de IA: ");
+            int comIA = Integer.parseInt(sc.nextLine().trim());
+
+            System.out.print("Quantidade de atividades que o aluno conseguiu explicar: ");
+            int explicadas = Integer.parseInt(sc.nextLine().trim());
+
+            System.out.print("Quantidade de códigos que o aluno conseguiu modificar sem ajuda: ");
+            int modificados = Integer.parseInt(sc.nextLine().trim());
+
+            System.out.print("Quantidade de entregas com conteúdo ainda não estudado: ");
+            int naoVisto = Integer.parseInt(sc.nextLine().trim());
+
+            // Cria o acompanhamento — o risco já é calculado automaticamente no construtor
+            AcompanhamentoIA acomp = new AcompanhamentoIA(alunoEncontrado, entregues, comIA,
+                                                          explicadas, modificados, naoVisto);
+            acompanhamentos[totalAcompanhamentos] = acomp;
+            totalAcompanhamentos++;
+
+            System.out.println("Acompanhamento registrado! Risco calculado: " + acomp.getNivelRisco());
+
+        } catch (NumberFormatException e) {
+            System.out.println("Valor inválido. Acompanhamento não registrado.");
+        }
     }
 
     static void listarAlunos() {
-        System.out.println("[em breve] Listar alunos");
+        if (totalAlunos == 0) {
+            System.out.println("Nenhum aluno cadastrado.");
+            return;
+        }
+
+        System.out.println("\n--- Lista de Alunos ---");
+        for (int i = 0; i < totalAlunos; i++) {
+            System.out.println((i + 1) + ". " + alunos[i].toString());
+        }
     }
 
     static void listarBolsistas() {
-        System.out.println("[em breve] Listar bolsistas");
+        if (totalBolsistas == 0) {
+            System.out.println("Nenhum bolsista de IC cadastrado.");
+            return;
+        }
+
+        System.out.println("\n--- Bolsistas de IC ---");
+        for (int i = 0; i < totalBolsistas; i++) {
+            System.out.println((i + 1) + ". " + bolsistas[i].toString());
+        }
     }
 
     static void nomeMaisLongo() {
-        System.out.println("[em breve] Nome mais longo");
+        if (totalAlunos == 0) {
+            System.out.println("Nenhum aluno cadastrado.");
+            return;
+        }
+
+        // Começa assumindo que o primeiro é o mais longo e compara com os demais
+        String maisLongo = alunos[0].getPessoa().getNome();
+        for (int i = 1; i < totalAlunos; i++) {
+            String nome = alunos[i].getPessoa().getNome();
+            if (nome.length() > maisLongo.length()) {
+                maisLongo = nome;
+            }
+        }
+
+        System.out.println("\nNome mais longo: " + maisLongo + " (" + maisLongo.length() + " caracteres)");
     }
 
     static void contarVogais() {
-        System.out.println("[em breve] Contar vogais");
+        if (totalAlunos == 0) {
+            System.out.println("Nenhum aluno cadastrado.");
+            return;
+        }
+
+        int totalVogais = 0;
+        // Percorre cada nome e cada caractere verificando se é vogal
+        for (int i = 0; i < totalAlunos; i++) {
+            String nome = alunos[i].getPessoa().getNome().toLowerCase();
+            for (int j = 0; j < nome.length(); j++) {
+                char c = nome.charAt(j);
+                if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ||
+                    c == 'á' || c == 'é' || c == 'í' || c == 'ó' || c == 'ú' ||
+                    c == 'â' || c == 'ê' || c == 'î' || c == 'ô' || c == 'û' ||
+                    c == 'ã' || c == 'õ' || c == 'à') {
+                    totalVogais++;
+                }
+            }
+        }
+
+        System.out.println("\nTotal de vogais em todos os nomes: " + totalVogais);
     }
 
     static void percentualPorCurso() {
-        System.out.println("[em breve] Percentual por curso");
+        if (totalAlunos == 0) {
+            System.out.println("Nenhum aluno cadastrado.");
+            return;
+        }
+
+        // Coleta os cursos únicos e conta quantos alunos tem em cada um
+        String[] cursos = new String[MAX];
+        int[] contagens = new int[MAX];
+        int totalCursos = 0;
+
+        for (int i = 0; i < totalAlunos; i++) {
+            String curso = alunos[i].getCurso();
+            boolean encontrado = false;
+
+            // Verifica se o curso já foi registrado
+            for (int j = 0; j < totalCursos; j++) {
+                if (cursos[j].equalsIgnoreCase(curso)) {
+                    contagens[j]++;
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            // Se for um curso novo, adiciona na lista
+            if (!encontrado) {
+                cursos[totalCursos] = curso;
+                contagens[totalCursos] = 1;
+                totalCursos++;
+            }
+        }
+
+        System.out.println("\n--- Percentual de Alunos por Curso ---");
+        for (int i = 0; i < totalCursos; i++) {
+            double percentual = (double) contagens[i] / totalAlunos * 100;
+            System.out.printf("%-30s %d aluno(s) — %.1f%%%n", cursos[i], contagens[i], percentual);
+        }
     }
 
     static void mediaIdade() {
-        System.out.println("[em breve] Média de idade");
+        if (totalAlunos == 0) {
+            System.out.println("Nenhum aluno cadastrado.");
+            return;
+        }
+
+        int somaIdades = 0;
+        for (int i = 0; i < totalAlunos; i++) {
+            somaIdades += alunos[i].getPessoa().getIdade();
+        }
+
+        double media = (double) somaIdades / totalAlunos;
+        System.out.printf("\nMédia de idade dos alunos: %.1f anos%n", media);
     }
 
     static void criarListaChamada() {
