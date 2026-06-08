@@ -387,26 +387,165 @@ public class Main {
     }
 
     static void criarListaChamada() {
-        System.out.println("[em breve] Criar lista de chamada");
+        if (totalAlunos == 0) {
+            System.out.println("Nenhum aluno cadastrado.");
+            return;
+        }
+
+        System.out.println("\n--- Criar/Atualizar Lista de Chamada ---");
+        System.out.print("Nome da disciplina: ");
+        disciplinaChamada = sc.nextLine().trim();
+
+        System.out.print("Nome do professor: ");
+        professorChamada = sc.nextLine().trim();
+
+        // Copia os nomes dos alunos para a lista de chamada
+        for (int i = 0; i < totalAlunos; i++) {
+            listaChamada[i] = alunos[i].getPessoa().getNome();
+        }
+
+        // Ordena os nomes em ordem alfabética usando bubble sort
+        for (int i = 0; i < totalAlunos - 1; i++) {
+            for (int j = 0; j < totalAlunos - i - 1; j++) {
+                if (listaChamada[j].compareToIgnoreCase(listaChamada[j + 1]) > 0) {
+                    String temp = listaChamada[j];
+                    listaChamada[j] = listaChamada[j + 1];
+                    listaChamada[j + 1] = temp;
+                }
+            }
+        }
+
+        System.out.println("Lista de chamada criada com sucesso!");
     }
 
     static void exibirListaChamada() {
-        System.out.println("[em breve] Exibir lista de chamada");
+        if (disciplinaChamada.isEmpty()) {
+            System.out.println("Lista de chamada ainda não foi criada. Use a opção 10.");
+            return;
+        }
+
+        System.out.println("\n========== LISTA DE CHAMADA ==========");
+        System.out.println("Disciplina: " + disciplinaChamada);
+        System.out.println("Professor:  " + professorChamada);
+        System.out.println("--------------------------------------");
+        System.out.printf("%-25s %-12s %-20s%n", "Nome", "Matrícula", "Curso");
+        System.out.println("--------------------------------------");
+
+        // Para exibir matrícula e curso, busca o aluno pelo nome ordenado
+        for (int i = 0; i < totalAlunos; i++) {
+            for (int j = 0; j < totalAlunos; j++) {
+                if (alunos[j].getPessoa().getNome().equals(listaChamada[i])) {
+                    System.out.printf("%-25s %-12s %-20s%n",
+                        listaChamada[i],
+                        alunos[j].getMatricula(),
+                        alunos[j].getCurso());
+                    break;
+                }
+            }
+        }
+        System.out.println("======================================");
     }
 
     static void calcularRiscoPedagogico() {
-        System.out.println("[em breve] Calcular risco pedagógico");
+        if (totalAcompanhamentos == 0) {
+            System.out.println("Nenhum acompanhamento registrado.");
+            return;
+        }
+
+        System.out.println("\n--- Calculando Risco Pedagógico ---");
+        // O risco já foi calculado no construtor de AcompanhamentoIA
+        // Aqui apenas confirmamos e exibimos um resumo por nível
+        int baixo = 0, moderado = 0, alto = 0;
+        for (int i = 0; i < totalAcompanhamentos; i++) {
+            String risco = acompanhamentos[i].getNivelRisco();
+            if (risco.equals("Baixo")) baixo++;
+            else if (risco.equals("Moderado")) moderado++;
+            else if (risco.equals("Alto")) alto++;
+        }
+
+        System.out.println("Risco Baixo:    " + baixo + " aluno(s)");
+        System.out.println("Risco Moderado: " + moderado + " aluno(s)");
+        System.out.println("Risco Alto:     " + alto + " aluno(s)");
+        System.out.println("Total com acompanhamento: " + totalAcompanhamentos);
     }
 
     static void relatorioGeralRisco() {
-        System.out.println("[em breve] Relatório geral de risco");
+        if (totalAcompanhamentos == 0) {
+            System.out.println("Nenhum acompanhamento registrado.");
+            return;
+        }
+
+        System.out.println("\n========== RELATÓRIO GERAL DE RISCO PEDAGÓGICO ==========");
+        for (int i = 0; i < totalAcompanhamentos; i++) {
+            AcompanhamentoIA a = acompanhamentos[i];
+            System.out.println("\nAluno: " + a.getAluno().getPessoa().getNome());
+            System.out.println("  Matrícula:          " + a.getAluno().getMatricula());
+            System.out.println("  Atividades entregues:    " + a.getAtividadesEntregues());
+            System.out.println("  Declarou uso de IA:      " + a.getAtividadesComUsoIA());
+            System.out.println("  Conseguiu explicar:      " + a.getAtividadesExplicadas());
+            System.out.println("  Conseguiu modificar:     " + a.getCodigosModificados());
+            System.out.println("  Conteúdo não visto:      " + a.getEntregasComConteudoNaoVisto());
+            System.out.println("  Nível de risco:          " + a.getNivelRisco());
+            System.out.println("  ------------------------------------------");
+        }
     }
 
     static void exibirAlunosRiscoAlto() {
-        System.out.println("[em breve] Alunos em risco alto");
+        if (totalAcompanhamentos == 0) {
+            System.out.println("Nenhum acompanhamento registrado.");
+            return;
+        }
+
+        System.out.println("\n--- Alunos em Risco Alto ---");
+        boolean encontrou = false;
+        for (int i = 0; i < totalAcompanhamentos; i++) {
+            if (acompanhamentos[i].getNivelRisco().equals("Alto")) {
+                System.out.println("- " + acompanhamentos[i].getAluno().getPessoa().getNome() +
+                                   " | Matrícula: " + acompanhamentos[i].getAluno().getMatricula());
+                encontrou = true;
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("Nenhum aluno em risco alto.");
+        }
     }
 
+    // Inovação: recomendação pedagógica personalizada baseada no perfil de cada aluno
     static void inovacao() {
-        System.out.println("[em breve] Inovação do grupo");
+        if (totalAcompanhamentos == 0) {
+            System.out.println("Nenhum acompanhamento registrado.");
+            return;
+        }
+
+        System.out.println("\n========== RECOMENDAÇÕES PEDAGÓGICAS ==========");
+        System.out.println("Sugestões automáticas baseadas no nível de risco de cada aluno:");
+
+        for (int i = 0; i < totalAcompanhamentos; i++) {
+            AcompanhamentoIA a = acompanhamentos[i];
+            String nome = a.getAluno().getPessoa().getNome();
+            String risco = a.getNivelRisco();
+
+            System.out.println("\nAluno: " + nome + " | Risco: " + risco);
+
+            if (risco.equals("Baixo")) {
+                System.out.println("  Parabéns! O aluno demonstra uso consciente e formativo da IA.");
+                System.out.println("  Sugestão: Incentivar o aluno a compartilhar sua experiência com a turma.");
+            } else if (risco.equals("Moderado")) {
+                System.out.println("  Atenção: O aluno apresenta dependência parcial da IA.");
+                System.out.println("  Sugestão: Propor atividades sem uso de IA para fortalecer a autonomia.");
+                if (a.getAtividadesExplicadas() < a.getAtividadesEntregues() / 2) {
+                    System.out.println("  Sugestão extra: Realizar entrevista oral sobre os códigos entregues.");
+                }
+            } else if (risco.equals("Alto")) {
+                System.out.println("  ALERTA: O aluno demonstra uso não formativo da IA.");
+                System.out.println("  Sugestão: Agendar atendimento individual urgente.");
+                System.out.println("  Sugestão: Solicitar reentrega comentada e explicação presencial.");
+                if (a.getEntregasComConteudoNaoVisto() > 0) {
+                    System.out.println("  Sugestão extra: Revisar os conteúdos ainda não estudados com o aluno.");
+                }
+            }
+        }
+        System.out.println("\n================================================");
     }
 }
