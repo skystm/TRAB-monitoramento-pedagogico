@@ -15,8 +15,8 @@ public class Main {
     static int totalBolsistas = 0;
     static int totalAcompanhamentos = 0;
 
-    // Lista de chamada: disciplina e professor informados pelo usuário
-    static String[] listaChamada = new String[MAX]; // nomes em ordem alfabética
+    // Lista de chamada: índices do vetor alunos[] em ordem alfabética
+    static int[] listaChamada = new int[MAX];
     static String disciplinaChamada = "";
     static String professorChamada = "";
 
@@ -189,6 +189,14 @@ public class Main {
             return;
         }
 
+        // Validação: impede cadastro duplicado de bolsista para o mesmo aluno
+        for (int i = 0; i < totalBolsistas; i++) {
+            if (bolsistas[i].getAluno().getMatricula().equals(matricula)) {
+                System.out.println("Este aluno já está cadastrado como bolsista de IC.");
+                return;
+            }
+        }
+
         System.out.print("Nome do projeto: ");
         String projeto = sc.nextLine().trim();
 
@@ -233,6 +241,14 @@ public class Main {
         if (alunoEncontrado == null) {
             System.out.println("Aluno não encontrado.");
             return;
+        }
+
+        // Validação: impede registrar acompanhamento duplicado para o mesmo aluno
+        for (int i = 0; i < totalAcompanhamentos; i++) {
+            if (acompanhamentos[i].getAluno().getMatricula().equals(matricula)) {
+                System.out.println("Este aluno já possui acompanhamento registrado.");
+                return;
+            }
         }
 
         System.out.println("Aluno: " + alunoEncontrado.getPessoa().getNome());
@@ -399,16 +415,18 @@ public class Main {
         System.out.print("Nome do professor: ");
         professorChamada = sc.nextLine().trim();
 
-        // Copia os nomes dos alunos para a lista de chamada
+        // Inicializa a lista com os índices dos alunos cadastrados
         for (int i = 0; i < totalAlunos; i++) {
-            listaChamada[i] = alunos[i].getPessoa().getNome();
+            listaChamada[i] = i;
         }
 
-        // Ordena os nomes em ordem alfabética usando bubble sort
+        // Ordena os índices por nome em ordem alfabética usando bubble sort
         for (int i = 0; i < totalAlunos - 1; i++) {
             for (int j = 0; j < totalAlunos - i - 1; j++) {
-                if (listaChamada[j].compareToIgnoreCase(listaChamada[j + 1]) > 0) {
-                    String temp = listaChamada[j];
+                String nomeJ  = alunos[listaChamada[j]].getPessoa().getNome();
+                String nomeJ1 = alunos[listaChamada[j + 1]].getPessoa().getNome();
+                if (nomeJ.compareToIgnoreCase(nomeJ1) > 0) {
+                    int temp = listaChamada[j];
                     listaChamada[j] = listaChamada[j + 1];
                     listaChamada[j + 1] = temp;
                 }
@@ -431,17 +449,13 @@ public class Main {
         System.out.printf("%-25s %-12s %-20s%n", "Nome", "Matrícula", "Curso");
         System.out.println("--------------------------------------");
 
-        // Para exibir matrícula e curso, busca o aluno pelo nome ordenado
+        // Cada posição da lista é um índice direto no vetor alunos[]
         for (int i = 0; i < totalAlunos; i++) {
-            for (int j = 0; j < totalAlunos; j++) {
-                if (alunos[j].getPessoa().getNome().equals(listaChamada[i])) {
-                    System.out.printf("%-25s %-12s %-20s%n",
-                        listaChamada[i],
-                        alunos[j].getMatricula(),
-                        alunos[j].getCurso());
-                    break;
-                }
-            }
+            Aluno a = alunos[listaChamada[i]];
+            System.out.printf("%-25s %-12s %-20s%n",
+                a.getPessoa().getNome(),
+                a.getMatricula(),
+                a.getCurso());
         }
         System.out.println("======================================");
     }
@@ -534,7 +548,7 @@ public class Main {
             } else if (risco.equals("Moderado")) {
                 System.out.println("  Atenção: O aluno apresenta dependência parcial da IA.");
                 System.out.println("  Sugestão: Propor atividades sem uso de IA para fortalecer a autonomia.");
-                if (a.getAtividadesExplicadas() < a.getAtividadesEntregues() / 2) {
+                if (a.getAtividadesExplicadas() < a.getAtividadesEntregues() / 2.0) {
                     System.out.println("  Sugestão extra: Realizar entrevista oral sobre os códigos entregues.");
                 }
             } else if (risco.equals("Alto")) {

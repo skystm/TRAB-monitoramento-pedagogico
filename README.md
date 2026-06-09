@@ -98,6 +98,16 @@ A inovação está diretamente integrada ao sistema — utiliza os vetores de `A
 
 ---
 
+## Repositório do Projeto
+
+O código-fonte foi versionado com Git e está disponível publicamente no GitHub:
+
+**https://github.com/skystm/TRAB-monitoramento-pedagogico**
+
+O histórico de commits registra o desenvolvimento incremental do projeto, com cada etapa commitada separadamente (criação das classes, implementação das operações, README).
+
+---
+
 ## Ferramentas de IA Utilizadas
 
 - **Claude (Anthropic)** — utilizado via Claude Code (interface de linha de comando)
@@ -112,7 +122,7 @@ A conversa completa com o Claude, incluindo todos os prompts utilizados durante 
 - Criação das classes `Pessoa`, `Aluno`, `BolsistaIC` e `AcompanhamentoIA` com comentários explicativos
 - Criação do esqueleto do `Main` com menu e vetores
 - Implementação de cada operação do menu individualmente
-- Criação deste README
+- Auxílio na criação deste README
 
 ---
 

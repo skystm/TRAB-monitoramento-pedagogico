@@ -1,0 +1,1437 @@
+╭─── Claude Code v2.1.119 ─────────────────────────────────────────────────────╮
+│                                    │ Tips for getting started                │
+│            Welcome back!           │ Run /init to create a CLAUDE.md file w… │
+│                                    │ Note: You have launched claude in your… │
+│               ▐▛███▜▌              │ ─────────────────────────────────────── │
+│              ▝▜█████▛▘             │ Recent activity                         │
+│                ▘▘ ▝▝               │ No recent activity                      │
+│                                    │                                         │
+│   Sonnet 4.6 · API Usage Billing   │                                         │
+│          C:\Users\I757723          │                                         │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+❯ oi claude                                                                     
+
+● Oi! O que posso fazer por você hoje?
+
+❯ preciso fazer um projeto novo, ja tenho a pasta "tf" no desktop para criar em 
+   java uma aplicação para um trabalho de faculdade                             
+
+● Legal! Me conta mais sobre o projeto:
+
+  - Qual é o tema/objetivo da aplicação?
+  - Tem algum requisito específico do professor (estruturas de dados, padrões,
+  etc.)?
+  - Vai usar algum framework (Spring, Maven/Gradle) ou Java puro?
+
+❯ cd C:\Users\I757723\Desktop\tf                                                
+
+● Certo, vou navegar até a pasta.
+
+  Listed 1 directory (ctrl+o to expand)
+
+● Tem um PDF com o enunciado. Quer que eu leia para entender os requisitos do
+  trabalho?
+
+❯ leia, mas nao faça tudo direto, vamos por etapas até para que eu possa tirar  
+  aprendizado do mesmo                                                          
+
+● Vou ler o enunciado agora.
+
+  Read 1 file (ctrl+o to expand)
+
+● Entendi o trabalho completo. Vou resumir o que precisa ser feito e depois a
+  gente começa pela primeira etapa:
+
+  ---
+  Resumo do TF:
+
+  Sistema de monitoramento pedagógico do uso de IA, com:
+
+  4 classes obrigatórias:
+  - Pessoa → nome, idade, local de nascimento
+  - Aluno → composição com Pessoa + curso, matrícula, semestre, ano, bolsista
+  (boolean)
+  - BolsistaIC → composição com Aluno + projeto, orientador
+  - AcompanhamentoIA → composição com Aluno + métricas de uso de IA + nível de
+  risco
+
+  16 operações no menu (cadastros, listagens, cálculos, risco pedagógico,
+  inovação)
+
+  Restrições: só arrays (tamanho 10), sem ArrayList, sem arquivos, sem banco de
+  dados.
+
+  Entregáveis: código Java + README + vídeo de 4 min.
+
+  ---
+  Proposta de etapas:
+
+  1. Criar as 4 classes (sem menu ainda)
+  2. Criar a classe principal com o menu e as operações de cadastro
+  3. Implementar listagens e buscas
+  4. Implementar cálculos (média, percentual, vogais, risco)
+  5. Lista de chamada e ordenação
+  6. Inovação
+  7. README
+
+  Quer começar pela Etapa 1 — criação das classes? Se sim, você já tem ideia de
+  qual inovação quer fazer, ou deixamos para decidir depois?
+
+※ recap: Working on a Java university project to build a pedagogical AI monitoring system. The plan is to build it step by step, and the next action is to start Etapa 1 by creating the 4 required classes: Pessoa, Aluno, BolsistaIC, and AcompanhamentoIA. (disable recaps in /config)
+
+❯ vamos pra cima, quero versionar no git também para ter como portfolio, entao  
+  só me guiar                                                                   
+
+● Ótimo! Vamos começar pelo Git e depois as classes.
+
+  Primeiro, você tem o Git instalado? Rode isso pra checar:
+
+● Bash(git --version 2>&1 && java -version 2>&1 && javac -version 2>&1)
+  ⎿  git version 2.54.0.windows.1
+     openjdk version "26.0.1" 2026-04-21
+     OpenJDK Runtime Environment SapMachine (build 26.0.1+8)
+     … +3 lines (ctrl+o to expand)
+
+● Tudo instalado. Agora vamos inicializar o repositório Git na pasta tf:
+
+  Passo 1 — inicializar o repo:
+
+  ! git -C C:/Users/I757723/Desktop/tf init
+
+  Passo 2 — criar um .gitignore para ignorar arquivos compilados Java. Roda
+  isso:
+
+  ! echo "*.class" > C:/Users/I757723/Desktop/tf/.gitignore
+
+  Depois disso, me diz se já tem conta no GitHub para criarmos o repositório
+  remoto também, ou quer deixar só local por enquanto?
+
+❯ pode fazer                                                                    
+
+● Vou inicializar o Git e criar o .gitignore.
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" init)
+  ⎿  Initialized empty Git repository in C:/Users/I757723/Desktop/tf/.git/
+
+● Write(Desktop\tf\.gitignore)
+  ⎿  Wrote 1 lines to Desktop\tf\.gitignore
+      1 *.class
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" add .gitignore && git -C
+      "C:/Users/I757723/Desktop/tf" commit -m "chore: init project with
+      .gitignore")
+  ⎿  warning: in the working copy of '.gitignore', LF will be replaced by C
+     RLF the next time Git touches it
+     [master (root-commit) cb5a25e] chore: init project with .gitignore
+     … +15 lines (ctrl+o to expand)
+
+● Repo iniciado e primeiro commit feito. O Git configurou seu nome
+  automaticamente como Radomsky <andres.radomsky@sap.com> — se quiser usar outro
+   nome/email para o portfolio, rode:
+
+  ! git config --global user.name "Seu Nome"
+  ! git config --global user.email "seu@email.com"
+
+  Agora, Etapa 1 — as classes. Vamos criar a estrutura de pastas. O projeto vai
+  ficar assim:
+
+  tf/
+  ├── src/
+  │   ├── Pessoa.java
+  │   ├── Aluno.java
+  │   ├── BolsistaIC.java
+  │   ├── AcompanhamentoIA.java
+  │   └── Main.java
+  ├── .gitignore
+  └── README.md
+
+  Posso criar a classe Pessoa agora? É a mais simples e serve para você entender
+   o padrão que vamos usar nas demais.
+
+※ recap: Criando sistema Java de monitoramento pedagógico de IA para trabalho da PUCRS, com Git inicializado na pasta tf. Próximo passo: criar a classe Pessoa.java em src/. (disable recaps in /config)
+
+❯ qual comando para verificar conta logada no git, e ja vamos dar um push de    
+  criacao do gitignore                                                          
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" config user.name && git -C
+      "C:/Users/I757723/Desktop/tf" config user.email && gh auth status 2>&1)
+  ⎿  Error: Exit code 1
+     skystm
+
+● O nome local está como skystm mas o gh (GitHub CLI) não está autenticado. Você
+   tem duas opções para fazer o push:
+
+  Opção A — GitHub CLI (mais fácil):
+  ! gh auth login
+  Vai abrir um fluxo interativo para logar.
+
+  Opção B — HTTPS normal:
+  Cria o repo no GitHub manualmente pelo site, depois roda:
+  ! git -C "C:/Users/I757723/Desktop/tf" remote add origin
+  https://github.com/SEU_USUARIO/tf.git
+  ! git -C "C:/Users/I757723/Desktop/tf" push -u origin master
+
+  Qual prefere?
+
+❯ use a opcao b, o link é                                                       
+  https://github.com/skystm/TRAB-monitoramento-pedagogico.git                   
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" remote add origin
+      https://github.com/skystm/TRAB-monitoramento-pedagogico.git && git -C
+      "C:/Users/I757723/Desktop/tf" push…)
+  ⎿  To https://github.com/skystm/TRAB-monitoramento-pedagogico.git
+      * [new branch]      master -> master
+     branch 'master' set up to track 'origin/master'.
+
+● Push feito! Repositório no ar em
+  https://github.com/skystm/TRAB-monitoramento-pedagogico.
+
+  Agora vamos para a Etapa 1 — Classe Pessoa. Posso criar o arquivo
+  src/Pessoa.java com os atributos obrigatórios (nome, idade, localNascimento),
+  construtor e getters?
+
+❯ por favor pode sim                                                            
+
+● Bash(mkdir -p "C:/Users/I757723/Desktop/tf/src")
+  ⎿  Done
+● Write(Desktop\tf\src\Pessoa.java)
+  ⎿  Wrote 27 lines to Desktop\tf\src\Pessoa.java
+       2     private String nome;
+       3     private int idade;
+       4     private String localNascimento;
+       5 
+       6     public Pessoa(String nome, int idade, String localNascimento
+         ) {
+       7         this.nome = nome;
+       8         this.idade = idade;
+       9         this.localNascimento = localNascimento;
+      10     }
+     … +18 lines (ctrl+o to expand)
+
+● Criado. Alguns pontos para você entender o que foi feito:
+
+  - private nos atributos: boa prática de encapsulamento — ninguém acessa
+  diretamente, só pelos métodos.
+  - Construtor: recebe os 3 valores e inicializa o objeto.
+  - Getters: métodos getNome(), getIdade(), getLocalNascimento() para ler os
+  valores.
+  - toString(): facilita exibir os dados do objeto com
+  System.out.println(pessoa).
+
+  Antes de continuar, uma pergunta: você entendeu por que usamos private e não
+  public nos atributos? Isso vai ser importante nas próximas classes.
+
+❯ sim, nao usaremos setters?                                                    
+
+● Boa pergunta! Depende da necessidade do sistema.
+
+  Setters servem para alterar o valor de um atributo depois que o objeto já foi
+  criado. No caso de Pessoa, faz sentido perguntar: o nome, idade ou local de 
+  nascimento de uma pessoa vão mudar depois do cadastro?
+
+  Provavelmente não — pelo menos não nesse sistema. Então por ora não
+  precisamos.
+
+  Mas em Aluno, por exemplo, pode fazer sentido ter um setter para semestre, já
+  que o aluno avança de semestre ao longo do tempo.
+
+  Regra geral: só crie setter quando houver uma razão real para alterar o
+  atributo após a criação do objeto. Criar setters "por precaução" é uma prática
+   que viola o princípio de menor privilégio.
+
+  Quer seguir para a classe Aluno?
+
+❯ vamos                                                                         
+
+● Write(Desktop\tf\src\Aluno.java)
+  ⎿  Wrote 55 lines to Desktop\tf\src\Aluno.java
+       2     private Pessoa pessoa;
+       3     private String curso;
+       4     private String matricula;
+       5     private int semestre;
+       6     private int ano;
+       7     private boolean bolsistaIC;
+       8 
+       9     public Aluno(Pessoa pessoa, String curso, String matricula, 
+         int semestre, int ano, boolean bolsistaIC) {
+      10         this.pessoa = pessoa;
+     … +47 lines (ctrl+o to expand)
+
+● Criado. Pontos importantes desta classe:
+
+  - Composição: o atributo pessoa é um objeto do tipo Pessoa — é exatamente o
+  que o enunciado pede. Aluno "tem uma" Pessoa.
+  - isBolsistaIC(): para atributos boolean, a convenção Java é usar is em vez de
+   get.
+  - Setters apenas onde faz sentido: setSemestre (aluno avança) e setBolsistaIC
+  (status pode mudar). Os demais não têm setter.
+  - toString(): reutiliza o toString() de Pessoa — não duplica código.
+
+  Quer seguir para BolsistaIC?
+
+❯ talvez, estava pensando em adicionar comentarios em // para podermos recordar 
+   as explicaçoes, em tom humano e nao tao tecnico, afim de ter memoria boa ao  
+  gravar o video.                                                               
+
+● Faz todo sentido! Vou adicionar comentários em tom natural nas duas classes já
+   criadas, e já aplico o mesmo padrão nas próximas.
+
+● Write(Desktop\tf\src\Pessoa.java)
+  ⎿  Added 6 lines
+       1 +// Pessoa representa os dados pessoais básicos de qualquer estu
+         +dante                                                          
+       2  public class Pessoa {
+       3 +                                                               
+       4 +    // Atributos privados: só acessados pelos métodos abaixo, n
+         +ão diretamente                                                 
+       5      private String nome;
+       6      private int idade;
+       7      private String localNascimento;
+       8  
+       9 +    // Construtor: chamado quando criamos um objeto Pessoa com 
+         +os 3 dados                                                     
+      10      public Pessoa(String nome, int idade, String localNasciment
+          o) {
+      11          this.nome = nome;
+      12          this.idade = idade;
+      13          this.localNascimento = localNascimento;
+      14      }
+      15  
+      16 +    // Getters: única forma de ler os dados de fora da classe  
+      17      public String getNome() {
+      18          return nome;
+      19      }
+     ...
+      26          return localNascimento;
+      27      }
+      28  
+      29 +    // toString: quando imprimimos um objeto Pessoa, mostra iss
+         +o automaticamente                                              
+      30      public String toString() {
+      31          return "Nome: " + nome + " | Idade: " + idade + " | Nas
+          cimento: " + localNascimento;
+      32      }
+
+● Write(Desktop\tf\src\Aluno.java)
+  ⎿  Added 13 lines, removed 4 lines
+      1 +// Aluno representa um estudante cadastrado na turma            
+      2 +// Usa composição: em vez de repetir nome/idade aqui, carrega um
+        + objeto Pessoa                                                  
+      3  public class Aluno {
+      4 +                                                                
+      5 +    // Composição: Aluno "tem uma" Pessoa com os dados pessoais 
+      6      private Pessoa pessoa;
+      7      private String curso;
+      8      private String matricula;
+     ...
+      10      private int ano;
+      11      private boolean bolsistaIC;
+      12  
+      13 +    // Construtor: precisamos de todos os dados para cadastrar 
+         +um aluno                                                       
+      14      public Aluno(Pessoa pessoa, String curso, String matricula,
+           int semestre, int ano, boolean bolsistaIC) {
+      15          this.pessoa = pessoa;
+      16          this.curso = curso;
+     ...
+      20          this.bolsistaIC = bolsistaIC;
+      21      }
+      22  
+      23 +    // Getters: leitura dos dados do aluno                     
+      24      public Pessoa getPessoa() {
+      25          return pessoa;
+      26      }
+     ...
+      37          return semestre;
+      38      }
+      39  
+      34 -    public void setSemestre(int semestre) {                    
+      35 -        this.semestre = semestre;                              
+      36 -    }                                                          
+      37 -                                                               
+      40      public int getAno() {
+      41          return ano;
+      42      }
+      43  
+      44 +    // Para boolean, convenção Java é usar "is" em vez de "get"
+      45      public boolean isBolsistaIC() {
+      46          return bolsistaIC;
+      47      }
+      48  
+      49 +    // Setters apenas onde faz sentido alterar depois do cadast
+         +ro                                                             
+      50 +    public void setSemestre(int semestre) {                    
+      51 +        this.semestre = semestre;                              
+      52 +    }                                                          
+      53 +                                                               
+      54      public void setBolsistaIC(boolean bolsistaIC) {
+      55          this.bolsistaIC = bolsistaIC;
+      56      }
+      57  
+      58 +    // Reutiliza o toString() de Pessoa para não repetir código
+      59      public String toString() {
+      60          return pessoa.toString() + " | Curso: " + curso + " | M
+          atrícula: " + matricula +
+      61                 " | Semestre: " + semestre + " | Ano: " + ano +
+
+● Feito! Esse padrão de comentário vai ajudar muito na hora de revisar antes do
+  vídeo — explica o "porquê" sem ser um manual técnico.
+
+  Seguimos para BolsistaIC?
+
+❯ vamos de commit                                                               
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" add src/Pessoa.java src/Aluno.java
+      && git -C "C:/Users/I757723/Desktop/tf" commit -m "feat: add classes
+      Pessoa and Aluno wi…)
+  ⎿  warning: in the working copy of 'src/Aluno.java', LF will be replaced
+     by CRLF the next time Git touches it
+     warning: in the working copy of 'src/Pessoa.java', LF will be replaced
+     … +18 lines (ctrl+o to expand)
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" push)
+  ⎿  To https://github.com/skystm/TRAB-monitoramento-pedagogico.git
+        cb5a25e..c8c119b  master -> master
+
+● Commitado e no GitHub. Percebi que o PDF do enunciado foi junto — se quiser
+  ignorá-lo do repositório posso adicionar ao .gitignore.
+
+  Seguimos para BolsistaIC?
+
+❯ pode seguir                                                                   
+
+● Write(Desktop\tf\src\BolsistaIC.java)
+  ⎿  Wrote 35 lines to Desktop\tf\src\BolsistaIC.java
+          Iniciação Científicanta um aluno que participa de um projeto de
+       2 // Também usa composição: carrega um objeto Aluno com todos os d
+       3 public class BolsistaIC {
+       4 
+       5     // Composição: BolsistaIC "tem um" Aluno, que por sua vez "t
+       6     private Aluno aluno;
+       7     private String projeto;
+       9     private String orientador;
+      10     // Construtor: além dos dados do aluno, precisamos do projet
+         o e do orientador
+     … +32 lines (ctrl+o to expand)
+
+● Criado. O ponto mais importante aqui é a cadeia de composição:
+
+  BolsistaIC → tem um Aluno
+                   Aluno → tem uma Pessoa
+
+  Isso significa que para acessar o nome de um bolsista, por exemplo, você
+  navega assim:
+  bolsista.getAluno().getPessoa().getNome()
+
+  É exatamente o que o enunciado pede e o que o professor vai querer ver que
+  você entende.
+
+  Seguimos para a última classe, AcompanhamentoIA?
+
+❯ commit                                                                        
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" add src/BolsistaIC.java && git -C
+      "C:/Users/I757723/Desktop/tf" commit -m "feat: add class BolsistaIC with
+      comments" && git…)
+  ⎿  warning: in the working copy of 'src/BolsistaIC.java', LF will be repl
+     aced by CRLF the next time Git touches it
+     [master e4bd362] feat: add class BolsistaIC with comments
+     … +16 lines (ctrl+o to expand)
+
+● Feito! Seguimos para AcompanhamentoIA?
+
+❯ seguimos                                                                      
+
+● Write(Desktop\tf\src\AcompanhamentoIA.java)
+  ⎿  Wrote 87 lines to Desktop\tf\src\AcompanhamentoIA.java
+         o nas atividadesoIA armazena as métricas de uso de IA de um alun
+       2 // É a classe central do sistema: com esses dados calculamos o r
+         isco pedagógico
+       4 public class AcompanhamentoIA {
+       5     // Composição: vinculado a um Aluno já cadastrado no sistema
+       6     private Aluno aluno;
+       8     // Métricas coletadas ao longo das atividades
+       9     private int atividadesEntregues;
+      10     private int atividadesComUsoIA;       // quantas vezes decla
+         rou uso de IA
+     … +99 lines (ctrl+o to expand)
+
+● Criado. Pontos importantes:
+
+  - calcularRisco() é chamado no construtor — assim que o acompanhamento é
+  criado, o risco já é calculado automaticamente.
+  - A regra que usamos:
+    - Baixo: declarou IA em ≥70% + explicou ≥70% + modificou ≥70% + conteúdo não
+   visto ≤20%
+    - Alto: declarou IA em <30% OU explicou <40% OU modificou <40% OU conteúdo
+  não visto >50%
+    - Moderado: qualquer caso entre os dois
+  - Essa regra precisa estar explicada no README também.
+
+  Alguma dúvida sobre a lógica do risco antes de commitar?
+
+※ recap: Estamos construindo o sistema Java de monitoramento pedagógico de IA para o TF da PUCRS, usando arrays e composição entre classes. As classes Pessoa, Aluno e BolsistaIC já estão prontas e no GitHub. Próximo passo: commitar AcompanhamentoIA e criar a classe Main com o menu. (disable recaps in /config)
+
+❯ commit                                                                        
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" add src/AcompanhamentoIA.java && git
+       -C "C:/Users/I757723/Desktop/tf" commit -m "feat: add class
+      AcompanhamentoIA with risk…)
+  ⎿  warning: in the working copy of 'src/AcompanhamentoIA.java', LF will b
+     e replaced by CRLF the next time Git touches it
+     [master d537068] feat: add class AcompanhamentoIA with risk calculatio
+     … +17 lines (ctrl+o to expand)
+
+● Feito! As 4 classes obrigatórias estão prontas e no GitHub.
+
+  Agora entramos na Etapa 2 — classe Main.java com o menu interativo e os
+  arrays. Essa é a parte mais trabalhosa, então vamos por partes:
+
+  Primeiro vou criar o esqueleto do Main com os arrays declarados e o menu
+  funcionando (só exibindo as opções e lendo a escolha), sem implementar nada
+  ainda. Assim você vê a estrutura e a gente vai preenchendo operação por
+  operação. Pode ser?
+
+❯ pode criar to de olho                                                         
+● Write(Desktop\tf\src\Main.java)
+  ⎿  Wrote 150 lines to Desktop\tf\src\Main.java
+       1 import java.util.Scanner;
+       2 
+       3 public class Main {
+       4 
+       5     // Tamanho máximo dos vetores — definido pelo enunciado
+       6     static final int MAX = 10;
+       7 
+       8     // Vetores de objetos: sem ArrayList, sem listas dinâmicas
+       9     static Aluno[] alunos = new Aluno[MAX];
+      10     static BolsistaIC[] bolsistas = new BolsistaIC[MAX];
+     … +154 lines (ctrl+o to expand)
+
+● Esqueleto criado. Pontos para entender:
+
+  - static final int MAX = 10: constante do tamanho dos vetores, definida uma
+  vez só — se precisar mudar, muda em um lugar.
+  - Contadores (totalAlunos, etc.): como arrays têm tamanho fixo, precisamos
+  saber quantas posições já foram preenchidas.
+  - lerOpcao(): usa try/catch para não quebrar se o usuário digitar letra em vez
+   de número.
+  - Cada operação está declarada como método separado com [em breve] — vamos
+  preenchendo um por um.
+
+  Quer compilar e testar o menu funcionando antes de commitar?
+
+❯ commit e continuaremos                                                        
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" add src/Main.java && git -C
+      "C:/Users/I757723/Desktop/tf" commit -m "feat: add Main skeleton with menu
+       and array declaratio…)
+  ⎿  warning: in the working copy of 'src/Main.java', LF will be replaced b
+     y CRLF the next time Git touches it
+     [master fe6ebdd] feat: add Main skeleton with menu and array declarati
+     … +17 lines (ctrl+o to expand)
+
+● Feito! Agora vamos implementar as operações uma a uma.
+
+  Começo pelo cadastrarAluno() — é a base de tudo, pois bolsista e
+  acompanhamento dependem de um aluno já cadastrado. Pode ser?
+
+❯ sera implementado no main? continue                                           
+
+● Sim, tudo no Main.java mesmo — cada método já está declarado lá, vamos só
+  substituir o [em breve] pelo código real.
+
+  Implementando cadastrarAluno():
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(Desktop\tf\src\Main.java)
+  ⎿  Added 67 lines, removed 1 line
+       89      // ==================== OPERAÇÕES (a implementar) ========
+           ============
+       90  
+       91      static void cadastrarAluno() {
+       92 -        System.out.println("[em breve] Cadastrar aluno");     
+       92 +        // Verifica se ainda há espaço no vetor               
+       93 +        if (totalAlunos >= MAX) {                             
+       94 +            System.out.println("Limite de alunos atingido."); 
+       95 +            return;                                           
+       96 +        }                                                     
+       97 +                                                              
+       98 +        System.out.println("\n--- Cadastrar Aluno ---");      
+       99 +                                                              
+      100 +        System.out.print("Nome: ");                           
+      101 +        String nome = sc.nextLine().trim();                   
+      102 +                                                              
+      103 +        System.out.print("Idade: ");                          
+      104 +        int idade;                                            
+      105 +        try {                                                 
+      106 +            idade = Integer.parseInt(sc.nextLine().trim());   
+      107 +        } catch (NumberFormatException e) {                   
+      108 +            System.out.println("Idade inválida.");            
+      109 +            return;                                           
+      110 +        }                                                     
+      111 +                                                              
+      112 +        System.out.print("Local de nascimento: ");            
+      113 +        String localNascimento = sc.nextLine().trim();        
+      114 +                                                              
+      115 +        System.out.print("Curso: ");                          
+      116 +        String curso = sc.nextLine().trim();                  
+      117 +                                                              
+      118 +        System.out.print("Matrícula: ");                      
+      119 +        String matricula = sc.nextLine().trim();              
+      120 +                                                              
+      121 +        // Validação: matrícula duplicada                     
+      122 +        for (int i = 0; i < totalAlunos; i++) {               
+      123 +            if (alunos[i].getMatricula().equals(matricula)) { 
+      124 +                System.out.println("Matrícula já cadastrada.")
+          +;                                                             
+      125 +                return;                                       
+      126 +            }                                                 
+      127 +        }                                                     
+      128 +                                                              
+      129 +        System.out.print("Semestre: ");                       
+      130 +        int semestre;                                         
+      131 +        try {                                                 
+      132 +            semestre = Integer.parseInt(sc.nextLine().trim());
+      133 +        } catch (NumberFormatException e) {                   
+      134 +            System.out.println("Semestre inválido.");         
+      135 +            return;                                           
+      136 +        }                                                     
+      137 +                                                              
+      138 +        System.out.print("Ano: ");                            
+      139 +        int ano;                                              
+      140 +        try {                                                 
+      141 +            ano = Integer.parseInt(sc.nextLine().trim());     
+      142 +        } catch (NumberFormatException e) {                   
+      143 +            System.out.println("Ano inválido.");              
+      144 +            return;                                           
+      145 +        }                                                     
+      146 +                                                              
+      147 +        System.out.print("É bolsista de IC? (s/n): ");        
+      148 +        boolean bolsistaIC = sc.nextLine().trim().equalsIgnore
+          +Case("s");                                                    
+      149 +                                                              
+      150 +        // Cria os objetos usando composição: Pessoa dentro de
+          + Aluno                                                        
+      151 +        Pessoa pessoa = new Pessoa(nome, idade, localNasciment
+          +o);                                                           
+      152 +        Aluno aluno = new Aluno(pessoa, curso, matricula, seme
+          +stre, ano, bolsistaIC);                                       
+      153 +                                                              
+      154 +        // Insere no vetor na próxima posição disponível      
+      155 +        alunos[totalAlunos] = aluno;                          
+      156 +        totalAlunos++;                                        
+      157 +                                                              
+      158 +        System.out.println("Aluno cadastrado com sucesso!");  
+      159      }
+      160  
+      161      static void cadastrarBolsistaIC() {
+
+● Feito. Pontos para entender:
+
+  - if (totalAlunos >= MAX): impede cadastrar mais do que o vetor comporta —
+  validação obrigatória do enunciado.
+  - Verificação de matrícula duplicada: percorre o vetor com for comparando cada
+   matrícula — também obrigatório.
+  - alunos[totalAlunos] = aluno; totalAlunos++: insere na próxima posição livre
+  e incrementa o contador.
+  - Os try/catch nos campos numéricos evitam que o programa quebre se o usuário
+  digitar texto.
+
+  Seguimos para cadastrarBolsistaIC()?
+
+❯ cria                                                                          
+
+● Update(Desktop\tf\src\Main.java)
+  ⎿  Added 45 lines, removed 1 line
+      159      }
+      160  
+      161      static void cadastrarBolsistaIC() {
+      162 -        System.out.println("[em breve] Cadastrar bolsista de I
+          -C");                                                          
+      162 +        // Validação: precisa ter pelo menos um aluno cadastra
+          +do                                                            
+      163 +        if (totalAlunos == 0) {                               
+      164 +            System.out.println("Nenhum aluno cadastrado. Cadas
+          +tre um aluno primeiro.");                                     
+      165 +            return;                                           
+      166 +        }                                                     
+      167 +                                                              
+      168 +        if (totalBolsistas >= MAX) {                          
+      169 +            System.out.println("Limite de bolsistas atingido."
+          +);                                                            
+      170 +            return;                                           
+      171 +        }                                                     
+      172 +                                                              
+      173 +        System.out.println("\n--- Cadastrar Bolsista de IC ---
+          +");                                                           
+      174 +        System.out.print("Matrícula do aluno: ");             
+      175 +        String matricula = sc.nextLine().trim();              
+      176 +                                                              
+      177 +        // Busca o aluno pela matrícula no vetor              
+      178 +        Aluno alunoEncontrado = null;                         
+      179 +        for (int i = 0; i < totalAlunos; i++) {               
+      180 +            if (alunos[i].getMatricula().equals(matricula)) { 
+      181 +                alunoEncontrado = alunos[i];                  
+      182 +                break;                                        
+      183 +            }                                                 
+      184 +        }                                                     
+      185 +                                                              
+      186 +        // Validação: não permite cadastrar bolsista para alun
+          +o inexistente                                                 
+      187 +        if (alunoEncontrado == null) {                        
+      188 +            System.out.println("Aluno não encontrado.");      
+      189 +            return;                                           
+      190 +        }                                                     
+      191 +                                                              
+      192 +        System.out.print("Nome do projeto: ");                
+      193 +        String projeto = sc.nextLine().trim();                
+      194 +                                                              
+      195 +        System.out.print("Nome do orientador: ");             
+      196 +        String orientador = sc.nextLine().trim();             
+      197 +                                                              
+      198 +        // Cria o bolsista com composição: BolsistaIC "tem um"
+          + Aluno                                                        
+      199 +        BolsistaIC bolsista = new BolsistaIC(alunoEncontrado, 
+          +projeto, orientador);                                         
+      200 +        bolsistas[totalBolsistas] = bolsista;                 
+      201 +        totalBolsistas++;                                     
+      202 +                                                              
+      203 +        // Atualiza o flag no objeto Aluno também             
+      204 +        alunoEncontrado.setBolsistaIC(true);                  
+      205 +                                                              
+      206 +        System.out.println("Bolsista de IC cadastrado com suce
+          +sso!");                                                       
+      207      }
+      208  
+      209      static void registrarAcompanhamento() {
+
+● Feito. Pontos importantes:
+
+  - Busca por matrícula: percorre o vetor de alunos até achar — se não achar,
+  bloqueia o cadastro.
+  - alunoEncontrado.setBolsistaIC(true): atualiza o flag no próprio objeto Aluno
+   para manter consistência — se listar alunos, ele já aparece como bolsista.
+  - A composição aqui é BolsistaIC → Aluno → Pessoa, a cadeia completa.
+
+  Seguimos para registrarAcompanhamento()?
+
+❯ segue                                                                         
+
+● Update(Desktop\tf\src\Main.java)
+  ⎿  Added 57 lines, removed 1 line
+      207      }
+      208  
+      209      static void registrarAcompanhamento() {
+      210 -        System.out.println("[em breve] Registrar acompanhament
+          -o");                                                          
+      210 +        if (totalAlunos == 0) {                               
+      211 +            System.out.println("Nenhum aluno cadastrado. Cadas
+          +tre um aluno primeiro.");                                     
+      212 +            return;                                           
+      213 +        }                                                     
+      214 +                                                              
+      215 +        if (totalAcompanhamentos >= MAX) {                    
+      216 +            System.out.println("Limite de acompanhamentos atin
+          +gido.");                                                      
+      217 +            return;                                           
+      218 +        }                                                     
+      219 +                                                              
+      220 +        System.out.println("\n--- Registrar Acompanhamento de 
+          +IA ---");                                                     
+      221 +        System.out.print("Matrícula do aluno: ");             
+      222 +        String matricula = sc.nextLine().trim();              
+      223 +                                                              
+      224 +        // Busca o aluno pela matrícula                       
+      225 +        Aluno alunoEncontrado = null;                         
+      226 +        for (int i = 0; i < totalAlunos; i++) {               
+      227 +            if (alunos[i].getMatricula().equals(matricula)) { 
+      228 +                alunoEncontrado = alunos[i];                  
+      229 +                break;                                        
+      230 +            }                                                 
+      231 +        }                                                     
+      232 +                                                              
+      233 +        if (alunoEncontrado == null) {                        
+      234 +            System.out.println("Aluno não encontrado.");      
+      235 +            return;                                           
+      236 +        }                                                     
+      237 +                                                              
+      238 +        System.out.println("Aluno: " + alunoEncontrado.getPess
+          +oa().getNome());                                              
+      239 +                                                              
+      240 +        try {                                                 
+      241 +            System.out.print("Quantidade de atividades entregu
+          +es: ");                                                       
+      242 +            int entregues = Integer.parseInt(sc.nextLine().tri
+          +m());                                                         
+      243 +                                                              
+      244 +            System.out.print("Quantidade de atividades com uso
+          + declarado de IA: ");                                         
+      245 +            int comIA = Integer.parseInt(sc.nextLine().trim())
+          +;                                                             
+      246 +                                                              
+      247 +            System.out.print("Quantidade de atividades que o a
+          +luno conseguiu explicar: ");                                  
+      248 +            int explicadas = Integer.parseInt(sc.nextLine().tr
+          +im());                                                        
+      249 +                                                              
+      250 +            System.out.print("Quantidade de códigos que o alun
+          +o conseguiu modificar sem ajuda: ");                          
+      251 +            int modificados = Integer.parseInt(sc.nextLine().t
+          +rim());                                                       
+      252 +                                                              
+      253 +            System.out.print("Quantidade de entregas com conte
+          +údo ainda não estudado: ");                                   
+      254 +            int naoVisto = Integer.parseInt(sc.nextLine().trim
+          +());                                                          
+      255 +                                                              
+      256 +            // Cria o acompanhamento — o risco já é calculado 
+          +automaticamente no construtor                                 
+      257 +            AcompanhamentoIA acomp = new AcompanhamentoIA(alun
+          +oEncontrado, entregues, comIA,                                
+      258 +                                                          expl
+          +icadas, modificados, naoVisto);                               
+      259 +            acompanhamentos[totalAcompanhamentos] = acomp;    
+      260 +            totalAcompanhamentos++;                           
+      261 +                                                              
+      262 +            System.out.println("Acompanhamento registrado! Ris
+          +co calculado: " + acomp.getNivelRisco());                     
+      263 +                                                              
+      264 +        } catch (NumberFormatException e) {                   
+      265 +            System.out.println("Valor inválido. Acompanhamento
+          + não registrado.");                                           
+      266 +        }                                                     
+      267      }
+      268  
+      269      static void listarAlunos() {
+
+● Feito. Ponto de destaque aqui:
+
+  - O risco já é exibido na hora do registro — porque calcularRisco() é chamado
+  no construtor de AcompanhamentoIA, o resultado já vem pronto sem precisar
+  chamar nenhum método extra.
+
+  Seguimos para as listagens (listarAlunos e listarBolsistas)?
+
+❯ sim                                                                           
+
+●
+
+● Update(Desktop\tf\src\Main.java)
+  ⎿  Added 18 lines, removed 2 lines
+      267      }
+      268  
+      269      static void listarAlunos() {
+      270 -        System.out.println("[em breve] Listar alunos");       
+      270 +        if (totalAlunos == 0) {                               
+      271 +            System.out.println("Nenhum aluno cadastrado.");   
+      272 +            return;                                           
+      273 +        }                                                     
+      274 +                                                              
+      275 +        System.out.println("\n--- Lista de Alunos ---");      
+      276 +        for (int i = 0; i < totalAlunos; i++) {               
+      277 +            System.out.println((i + 1) + ". " + alunos[i].toSt
+          +ring());                                                      
+      278 +        }                                                     
+      279      }
+      280  
+      281      static void listarBolsistas() {
+      274 -        System.out.println("[em breve] Listar bolsistas");    
+      282 +        if (totalBolsistas == 0) {                            
+      283 +            System.out.println("Nenhum bolsista de IC cadastra
+          +do.");                                                        
+      284 +            return;                                           
+      285 +        }                                                     
+      286 +                                                              
+      287 +        System.out.println("\n--- Bolsistas de IC ---");      
+      288 +        for (int i = 0; i < totalBolsistas; i++) {            
+      289 +            System.out.println((i + 1) + ". " + bolsistas[i].t
+          +oString());                                                   
+      290 +        }                                                     
+      291      }
+      292  
+      293      static void nomeMaisLongo() {
+
+● Feito. Simples e direto — percorre o vetor até totalAlunos/totalBolsistas (não
+   até MAX) para não exibir posições vazias.
+
+  Seguimos para nomeMaisLongo() e contarVogais()?
+
+❯ sim                                                                           
+
+●
+
+● Update(Desktop\tf\src\Main.java)
+  ⎿  Added 36 lines, removed 2 lines
+      291      }
+      292  
+      293      static void nomeMaisLongo() {
+      294 -        System.out.println("[em breve] Nome mais longo");     
+      294 +        if (totalAlunos == 0) {                               
+      295 +            System.out.println("Nenhum aluno cadastrado.");   
+      296 +            return;                                           
+      297 +        }                                                     
+      298 +                                                              
+      299 +        // Começa assumindo que o primeiro é o mais longo e co
+          +mpara com os demais                                           
+      300 +        String maisLongo = alunos[0].getPessoa().getNome();   
+      301 +        for (int i = 1; i < totalAlunos; i++) {               
+      302 +            String nome = alunos[i].getPessoa().getNome();    
+      303 +            if (nome.length() > maisLongo.length()) {         
+      304 +                maisLongo = nome;                             
+      305 +            }                                                 
+      306 +        }                                                     
+      307 +                                                              
+      308 +        System.out.println("\nNome mais longo: " + maisLongo +
+          + " (" + maisLongo.length() + " caracteres)");                 
+      309      }
+      310  
+      311      static void contarVogais() {
+      298 -        System.out.println("[em breve] Contar vogais");       
+      312 +        if (totalAlunos == 0) {                               
+      313 +            System.out.println("Nenhum aluno cadastrado.");   
+      314 +            return;                                           
+      315 +        }                                                     
+      316 +                                                              
+      317 +        int totalVogais = 0;                                  
+      318 +        // Percorre cada nome e cada caractere verificando se 
+          +é vogal                                                       
+      319 +        for (int i = 0; i < totalAlunos; i++) {               
+      320 +            String nome = alunos[i].getPessoa().getNome().toLo
+          +werCase();                                                    
+      321 +            for (int j = 0; j < nome.length(); j++) {         
+      322 +                char c = nome.charAt(j);                      
+      323 +                if (c == 'a' || c == 'e' || c == 'i' || c == '
+          +o' || c == 'u' ||                                             
+      324 +                    c == 'á' || c == 'é' || c == 'í' || c == '
+          +ó' || c == 'ú' ||                                             
+      325 +                    c == 'â' || c == 'ê' || c == 'î' || c == '
+          +ô' || c == 'û' ||                                             
+      326 +                    c == 'ã' || c == 'õ' || c == 'à') {       
+      327 +                    totalVogais++;                            
+      328 +                }                                             
+      329 +            }                                                 
+      330 +        }                                                     
+      331 +                                                              
+      332 +        System.out.println("\nTotal de vogais em todos os nome
+          +s: " + totalVogais);                                          
+      333      }
+      334  
+      335      static void percentualPorCurso() {
+
+● Feito. Pontos para entender:
+
+  - nomeMaisLongo: clássico algoritmo de busca de máximo — inicia com o primeiro
+   elemento e atualiza sempre que achar um maior.
+  - contarVogais: dois for aninhados — o externo percorre os alunos, o interno
+  percorre cada letra do nome. O .toLowerCase() garante que maiúsculas não
+  escapem da verificação. Incluímos vogais acentuadas porque nomes brasileiros
+  têm muitas.
+
+  Seguimos para percentualPorCurso() e mediaIdade()?
+
+❯ sim                                                                           
+
+●
+
+● Update(Desktop\tf\src\Main.java)
+  ⎿  Added 48 lines, removed 2 lines
+      333      }
+      334  
+      335      static void percentualPorCurso() {
+      336 -        System.out.println("[em breve] Percentual por curso");
+      336 +        if (totalAlunos == 0) {                               
+      337 +            System.out.println("Nenhum aluno cadastrado.");   
+      338 +            return;                                           
+      339 +        }                                                     
+      340 +                                                              
+      341 +        // Coleta os cursos únicos e conta quantos alunos tem 
+          +em cada um                                                    
+      342 +        String[] cursos = new String[MAX];                    
+      343 +        int[] contagens = new int[MAX];                       
+      344 +        int totalCursos = 0;                                  
+      345 +                                                              
+      346 +        for (int i = 0; i < totalAlunos; i++) {               
+      347 +            String curso = alunos[i].getCurso();              
+      348 +            boolean encontrado = false;                       
+      349 +                                                              
+      350 +            // Verifica se o curso já foi registrado          
+      351 +            for (int j = 0; j < totalCursos; j++) {           
+      352 +                if (cursos[j].equalsIgnoreCase(curso)) {      
+      353 +                    contagens[j]++;                           
+      354 +                    encontrado = true;                        
+      355 +                    break;                                    
+      356 +                }                                             
+      357 +            }                                                 
+      358 +                                                              
+      359 +            // Se for um curso novo, adiciona na lista        
+      360 +            if (!encontrado) {                                
+      361 +                cursos[totalCursos] = curso;                  
+      362 +                contagens[totalCursos] = 1;                   
+      363 +                totalCursos++;                                
+      364 +            }                                                 
+      365 +        }                                                     
+      366 +                                                              
+      367 +        System.out.println("\n--- Percentual de Alunos por Cur
+          +so ---");                                                     
+      368 +        for (int i = 0; i < totalCursos; i++) {               
+      369 +            double percentual = (double) contagens[i] / totalA
+          +lunos * 100;                                                  
+      370 +            System.out.printf("%-30s %d aluno(s) — %.1f%%%n", 
+          +cursos[i], contagens[i], percentual);                         
+      371 +        }                                                     
+      372      }
+      373  
+      374      static void mediaIdade() {
+      340 -        System.out.println("[em breve] Média de idade");      
+      375 +        if (totalAlunos == 0) {                               
+      376 +            System.out.println("Nenhum aluno cadastrado.");   
+      377 +            return;                                           
+      378 +        }                                                     
+      379 +                                                              
+      380 +        int somaIdades = 0;                                   
+      381 +        for (int i = 0; i < totalAlunos; i++) {               
+      382 +            somaIdades += alunos[i].getPessoa().getIdade();   
+      383 +        }                                                     
+      384 +                                                              
+      385 +        double media = (double) somaIdades / totalAlunos;     
+      386 +        System.out.printf("\nMédia de idade dos alunos: %.1f a
+          +nos%n", media);                                               
+      387      }
+      388  
+      389      static void criarListaChamada() {
+
+● Feito. Pontos para entender:
+
+  - percentualPorCurso: usa dois arrays paralelos — cursos[] guarda os nomes e
+  contagens[] guarda quantos alunos tem em cada posição correspondente. Sem
+  HashMap, sem ArrayList — só arrays.
+  - printf com %.1f: formata o número com 1 casa decimal, mais limpo que
+  concatenar string.
+  - mediaIdade: soma todas as idades e divide pelo total. O cast (double) é
+  necessário para não fazer divisão inteira.
+
+  Seguimos para criarListaChamada() e exibirListaChamada()?
+
+❯ meu deus quanto mais tem que ser feito?                                       
+
+● Haha, calma! Olha o que já está pronto:
+
+  Feito:
+  - Cadastrar aluno
+  - Cadastrar bolsista de IC
+  - Registrar acompanhamento
+  - Listar alunos
+  - Listar bolsistas
+  - Nome mais longo
+  - Contar vogais
+  - Percentual por curso
+  - Média de idade
+
+  Falta:
+  - Criar/exibir lista de chamada (2 métodos simples)
+  - Calcular risco + relatório + risco alto (3 métodos, mas a lógica já está na
+  classe)
+  - Inovação (1 método)
+
+  São mais 6 métodos, mas os de risco são os mais fáceis porque a lógica já está
+   em AcompanhamentoIA. A lista de chamada é a mais trabalhosa por causa da
+  ordenação alfabética.
+
+  No total estamos em 60% do sistema. Quer continuar?
+
+❯ e estes metodos todos sao necessarios descritamente no enunciado?             
+
+● Sim, todos estão explicitamente no enunciado como operações obrigatórias, olha
+   a lista deles:
+
+  ▎ 1. Cadastrar aluno ✅
+  ▎ 2. Cadastrar bolsista de IC ✅
+  ▎ 3. Registrar acompanhamento de IA ✅
+  ▎ 4. Listar todos os alunos ✅
+  ▎ 5. Listar bolsistas de IC ✅
+  ▎ 6. Nome mais longo ✅
+  ▎ 7. Contar vogais ✅
+  ▎ 8. Percentual por curso ✅
+  ▎ 9. Média de idade ✅
+  ▎ 10. Criar/atualizar lista de chamada ⬜
+  ▎ 11. Exibir lista de chamada ⬜
+  ▎ 12. Calcular risco pedagógico ⬜
+  ▎ 13. Relatório geral de risco ⬜
+  ▎ 14. Exibir alunos em risco alto ⬜
+  ▎ 15. Inovação do grupo ⬜
+  ▎ 16. Sair ✅
+
+  Nenhum é opcional. E vale lembrar que execução sem erros vale 2 pontos na
+  rubrica — o professor vai testar cada opção do menu. Então vale a pena
+  terminar tudo direitinho.
+
+  Vamos continuar?
+❯ de um commit e faça o resto de uma vez                                        
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" add src/Main.java && git -C
+      "C:/Users/I757723/Desktop/tf" commit -m "feat: implement operations 1-9 in
+       Main" && git -C "C:/…)
+  ⎿  warning: in the working copy of 'src/Main.java', LF will be replaced b
+     y CRLF the next time Git touches it
+     [master bf9395b] feat: implement operations 1-9 in Main
+     … +15 lines (ctrl+o to expand)
+
+● Agora vou implementar os 6 métodos restantes de uma vez.
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(Desktop\tf\src\Main.java)
+  ⎿  Added 145 lines, removed 6 lines
+      387      }
+      388  
+      389      static void criarListaChamada() {
+      390 -        System.out.println("[em breve] Criar lista de chamada"
+          -);                                                            
+      390 +        if (totalAlunos == 0) {                               
+      391 +            System.out.println("Nenhum aluno cadastrado.");   
+      392 +            return;                                           
+      393 +        }                                                     
+      394 +                                                              
+      395 +        System.out.println("\n--- Criar/Atualizar Lista de Cha
+          +mada ---");                                                   
+      396 +        System.out.print("Nome da disciplina: ");             
+      397 +        disciplinaChamada = sc.nextLine().trim();             
+      398 +                                                              
+      399 +        System.out.print("Nome do professor: ");              
+      400 +        professorChamada = sc.nextLine().trim();              
+      401 +                                                              
+      402 +        // Copia os nomes dos alunos para a lista de chamada  
+      403 +        for (int i = 0; i < totalAlunos; i++) {               
+      404 +            listaChamada[i] = alunos[i].getPessoa().getNome();
+      405 +        }                                                     
+      406 +                                                              
+      407 +        // Ordena os nomes em ordem alfabética usando bubble s
+          +ort                                                           
+      408 +        for (int i = 0; i < totalAlunos - 1; i++) {           
+      409 +            for (int j = 0; j < totalAlunos - i - 1; j++) {   
+      410 +                if (listaChamada[j].compareToIgnoreCase(listaC
+          +hamada[j + 1]) > 0) {                                         
+      411 +                    String temp = listaChamada[j];            
+      412 +                    listaChamada[j] = listaChamada[j + 1];    
+      413 +                    listaChamada[j + 1] = temp;               
+      414 +                }                                             
+      415 +            }                                                 
+      416 +        }                                                     
+      417 +                                                              
+      418 +        System.out.println("Lista de chamada criada com sucess
+          +o!");                                                         
+      419      }
+      420  
+      421      static void exibirListaChamada() {
+      394 -        System.out.println("[em breve] Exibir lista de chamada
+          -");                                                           
+      422 +        if (disciplinaChamada.isEmpty()) {                    
+      423 +            System.out.println("Lista de chamada ainda não foi
+          + criada. Use a opção 10.");                                   
+      424 +            return;                                           
+      425 +        }                                                     
+      426 +                                                              
+      427 +        System.out.println("\n========== LISTA DE CHAMADA ====
+          +======");                                                     
+      428 +        System.out.println("Disciplina: " + disciplinaChamada)
+          +;                                                             
+      429 +        System.out.println("Professor:  " + professorChamada);
+      430 +        System.out.println("----------------------------------
+          +----");                                                       
+      431 +        System.out.printf("%-25s %-12s %-20s%n", "Nome", "Matr
+          +ícula", "Curso");                                             
+      432 +        System.out.println("----------------------------------
+          +----");                                                       
+      433 +                                                              
+      434 +        // Para exibir matrícula e curso, busca o aluno pelo n
+          +ome ordenado                                                  
+      435 +        for (int i = 0; i < totalAlunos; i++) {               
+      436 +            for (int j = 0; j < totalAlunos; j++) {           
+      437 +                if (alunos[j].getPessoa().getNome().equals(lis
+          +taChamada[i])) {                                              
+      438 +                    System.out.printf("%-25s %-12s %-20s%n",  
+      439 +                        listaChamada[i],                      
+      440 +                        alunos[j].getMatricula(),             
+      441 +                        alunos[j].getCurso());                
+      442 +                    break;                                    
+      443 +                }                                             
+      444 +            }                                                 
+      445 +        }                                                     
+      446 +        System.out.println("==================================
+          +====");                                                       
+      447      }
+      448  
+      449      static void calcularRiscoPedagogico() {
+      398 -        System.out.println("[em breve] Calcular risco pedagógi
+          -co");                                                         
+      450 +        if (totalAcompanhamentos == 0) {                      
+      451 +            System.out.println("Nenhum acompanhamento registra
+          +do.");                                                        
+      452 +            return;                                           
+      453 +        }                                                     
+      454 +                                                              
+      455 +        System.out.println("\n--- Calculando Risco Pedagógico 
+          +---");                                                        
+      456 +        // O risco já foi calculado no construtor de Acompanha
+          +mentoIA                                                       
+      457 +        // Aqui apenas confirmamos e exibimos um resumo por ní
+          +vel                                                           
+      458 +        int baixo = 0, moderado = 0, alto = 0;                
+      459 +        for (int i = 0; i < totalAcompanhamentos; i++) {      
+      460 +            String risco = acompanhamentos[i].getNivelRisco();
+      461 +            if (risco.equals("Baixo")) baixo++;               
+      462 +            else if (risco.equals("Moderado")) moderado++;    
+      463 +            else if (risco.equals("Alto")) alto++;            
+      464 +        }                                                     
+      465 +                                                              
+      466 +        System.out.println("Risco Baixo:    " + baixo + " alun
+          +o(s)");                                                       
+      467 +        System.out.println("Risco Moderado: " + moderado + " a
+          +luno(s)");                                                    
+      468 +        System.out.println("Risco Alto:     " + alto + " aluno
+          +(s)");                                                        
+      469 +        System.out.println("Total com acompanhamento: " + tota
+          +lAcompanhamentos);                                            
+      470      }
+      471  
+      472      static void relatorioGeralRisco() {
+      402 -        System.out.println("[em breve] Relatório geral de risc
+          -o");                                                          
+      473 +        if (totalAcompanhamentos == 0) {                      
+      474 +            System.out.println("Nenhum acompanhamento registra
+          +do.");                                                        
+      475 +            return;                                           
+      476 +        }                                                     
+      477 +                                                              
+      478 +        System.out.println("\n========== RELATÓRIO GERAL DE RI
+          +SCO PEDAGÓGICO ==========");                                  
+      479 +        for (int i = 0; i < totalAcompanhamentos; i++) {      
+      480 +            AcompanhamentoIA a = acompanhamentos[i];          
+      481 +            System.out.println("\nAluno: " + a.getAluno().getP
+          +essoa().getNome());                                           
+      482 +            System.out.println("  Matrícula:          " + a.ge
+          +tAluno().getMatricula());                                     
+      483 +            System.out.println("  Atividades entregues:    " +
+          + a.getAtividadesEntregues());                                 
+      484 +            System.out.println("  Declarou uso de IA:      " +
+          + a.getAtividadesComUsoIA());                                  
+      485 +            System.out.println("  Conseguiu explicar:      " +
+          + a.getAtividadesExplicadas());                                
+      486 +            System.out.println("  Conseguiu modificar:     " +
+          + a.getCodigosModificados());                                  
+      487 +            System.out.println("  Conteúdo não visto:      " +
+          + a.getEntregasComConteudoNaoVisto());                         
+      488 +            System.out.println("  Nível de risco:          " +
+          + a.getNivelRisco());                                          
+      489 +            System.out.println("  ----------------------------
+          +--------------");                                             
+      490 +        }                                                     
+      491      }
+      492  
+      493      static void exibirAlunosRiscoAlto() {
+      406 -        System.out.println("[em breve] Alunos em risco alto");
+      494 +        if (totalAcompanhamentos == 0) {                      
+      495 +            System.out.println("Nenhum acompanhamento registra
+          +do.");                                                        
+      496 +            return;                                           
+      497 +        }                                                     
+      498 +                                                              
+      499 +        System.out.println("\n--- Alunos em Risco Alto ---"); 
+      500 +        boolean encontrou = false;                            
+      501 +        for (int i = 0; i < totalAcompanhamentos; i++) {      
+      502 +            if (acompanhamentos[i].getNivelRisco().equals("Alt
+          +o")) {                                                        
+      503 +                System.out.println("- " + acompanhamentos[i].g
+          +etAluno().getPessoa().getNome() +                             
+      504 +                                   " | Matrícula: " + acompanh
+          +amentos[i].getAluno().getMatricula());                        
+      505 +                encontrou = true;                             
+      506 +            }                                                 
+      507 +        }                                                     
+      508 +                                                              
+      509 +        if (!encontrou) {                                     
+      510 +            System.out.println("Nenhum aluno em risco alto.");
+      511 +        }                                                     
+      512      }
+      513  
+      514 +    // Inovação: recomendação pedagógica personalizada baseada
+          + no perfil de cada aluno                                      
+      515      static void inovacao() {
+      410 -        System.out.println("[em breve] Inovação do grupo");   
+      516 +        if (totalAcompanhamentos == 0) {                      
+      517 +            System.out.println("Nenhum acompanhamento registra
+          +do.");                                                        
+      518 +            return;                                           
+      519 +        }                                                     
+      520 +                                                              
+      521 +        System.out.println("\n========== RECOMENDAÇÕES PEDAGÓG
+          +ICAS ==========");                                            
+      522 +        System.out.println("Sugestões automáticas baseadas no 
+          +nível de risco de cada aluno:");                              
+      523 +                                                              
+      524 +        for (int i = 0; i < totalAcompanhamentos; i++) {      
+      525 +            AcompanhamentoIA a = acompanhamentos[i];          
+      526 +            String nome = a.getAluno().getPessoa().getNome(); 
+      527 +            String risco = a.getNivelRisco();                 
+      528 +                                                              
+      529 +            System.out.println("\nAluno: " + nome + " | Risco:
+          + " + risco);                                                  
+      530 +                                                              
+      531 +            if (risco.equals("Baixo")) {                      
+      532 +                System.out.println("  Parabéns! O aluno demons
+          +tra uso consciente e formativo da IA.");                      
+      533 +                System.out.println("  Sugestão: Incentivar o a
+          +luno a compartilhar sua experiência com a turma.");           
+      534 +            } else if (risco.equals("Moderado")) {            
+      535 +                System.out.println("  Atenção: O aluno apresen
+          +ta dependência parcial da IA.");                              
+      536 +                System.out.println("  Sugestão: Propor ativida
+          +des sem uso de IA para fortalecer a autonomia.");             
+      537 +                if (a.getAtividadesExplicadas() < a.getAtivida
+          +desEntregues() / 2) {                                         
+      538 +                    System.out.println("  Sugestão extra: Real
+          +izar entrevista oral sobre os códigos entregues.");           
+      539 +                }                                             
+      540 +            } else if (risco.equals("Alto")) {                
+      541 +                System.out.println("  ALERTA: O aluno demonstr
+          +a uso não formativo da IA.");                                 
+      542 +                System.out.println("  Sugestão: Agendar atendi
+          +mento individual urgente.");                                  
+      543 +                System.out.println("  Sugestão: Solicitar reen
+          +trega comentada e explicação presencial.");                   
+      544 +                if (a.getEntregasComConteudoNaoVisto() > 0) { 
+      545 +                    System.out.println("  Sugestão extra: Revi
+          +sar os conteúdos ainda não estudados com o aluno.");          
+      546 +                }                                             
+      547 +            }                                                 
+      548 +        }                                                     
+      549 +        System.out.println("\n================================
+          +================");                                           
+      550      }
+      551  }
+
+● Agora vamos compilar para garantir que está tudo certo:
+
+● Bash(cd "C:/Users/I757723/Desktop/tf/src" && javac *.java 2>&1)
+  ⎿  (No output)
+
+● Compilou sem erros. Commit e push:
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" add src/Main.java && git -C
+      "C:/Users/I757723/Desktop/tf" commit -m "feat: implement all remaining
+      operations (10-15)" && g…)
+  ⎿  warning: in the working copy of 'src/Main.java', LF will be replaced b
+     y CRLF the next time Git touches it
+     [master 5347955] feat: implement all remaining operations (10-15)
+     … +15 lines (ctrl+o to expand)
+
+● Sistema completo e no GitHub! Resumo do que foi implementado agora:
+
+  - Lista de chamada: bubble sort para ordenar alfabeticamente, exibe nome +
+  matrícula + curso formatado.
+  - Risco pedagógico: contagem por nível (baixo/moderado/alto) com resumo.
+  - Relatório geral: detalha todas as métricas de cada aluno.
+  - Risco alto: filtra apenas os alunos em situação crítica.
+  - Inovação (opção 15): recomendações pedagógicas personalizadas por aluno —
+  sugestões diferentes para cada nível de risco, com dicas extras dependendo das
+   métricas.
+
+  O que falta agora é só o README. Quer fazer ele?
+
+✻ Cooked for 1m 8s
+
+❯ vamos tambem, o que precisa                                                   
+
+● O enunciado define exatamente o que o README precisa ter. Vou listar o que é
+  obrigatório e o que você precisa me passar:
+
+  Você precisa me informar:
+  1. Seu nome completo e número de matrícula (e dos outros integrantes do grupo,
+   se houver)
+  2. Qual inovação vocês querem descrever (já implementamos as recomendações
+  pedagógicas)
+  3. Quais fontes de consulta usaram além do Claude (slides do professor,
+  livros, etc.)
+
+  O que eu já sei e posso escrever:
+  - Descrição geral do sistema
+  - Explicação de todas as classes criadas
+  - Explicação da composição entre Pessoa → Aluno → BolsistaIC e
+  AcompanhamentoIA
+  - Regra do risco pedagógico (já está implementada)
+  - Que usaram Claude como ferramenta de IA
+  - Lições aprendidas, dificuldades, como o código foi verificado
+
+  Me passa as informações pessoais e seguimos!
+
+❯ nomes: Rafael Radomsky, Julia de Oliveira                                     
+
+● E as matrículas dos dois?
+
+❯ 25204017 261092704                                                            
+
+● Só confirmar:
+
+  - Rafael Radomsky — matrícula 25204017
+  - Julia de Oliveira — matrícula 261092704
+
+  Correto?
+
+❯ correto                                                                       
+
+● Write(Desktop\tf\README.md)
+  ⎿  Wrote 175 lines to Desktop\tf\README.md
+       1 # Sistema de Monitoramento Pedagógico do Uso de IA
+       2 
+       3 ## Autores
+       4 
+       5 | Nome | Matrícula |
+       6 |------|-----------|
+       7 | Rafael Radomsky | 25204017 |
+       8 | Julia de Oliveira | 261092704 |
+       9 
+      10 ---
+     … +245 lines (ctrl+o to expand)
+
+● Pronto! Agora uma observação importante: a divisão de tarefas que coloquei no 
+  README é uma sugestão — ajuste para refletir o que vocês realmente fizeram,
+  pois o professor pode perguntar sobre isso na apresentação.
+
+  Quer revisar alguma seção antes de commitar?
+
+✻ Brewed for 54s
+
+※ recap: Sistema de monitoramento pedagógico em Java está quase completo — todas as classes e operações do menu foram implementadas e o README foi criado. Próximo passo: revisar o README e fazer o commit final.
+
+❯ commit porfavor                                                               
+
+● Bash(git -C "C:/Users/I757723/Desktop/tf" add README.md && git -C
+      "C:/Users/I757723/Desktop/tf" commit -m "docs: add README with full
+      project documentation" && git -…)
+  ⎿  warning: in the working copy of 'README.md', LF will be replaced by CR
+     LF the next time Git touches it
+     [master ff1a398] docs: add README with full project documentation
+     … +16 lines (ctrl+o to expand)
+
+● Feito! O projeto está completo e no GitHub. Resumo do que foi entregue:
+
+  Código:
+  - Pessoa.java, Aluno.java, BolsistaIC.java, AcompanhamentoIA.java
+  - Main.java com todas as 15 operações + menu + validações
+
+  Documentação:
+  - README.md com tudo que o enunciado exige
+
+  O que ainda falta para entrega:
+  - Gravar o vídeo pitch de até 4 minutos com os dois integrantes
+  - Ajustar a divisão de tarefas no README para refletir o que realmente cada um
+   fez
+  - Adicionar o link do vídeo no README antes de entregar no Moodle
+
+  Boa sorte na apresentação!
+
+❯ /export C:\Users\I757723\Desktop\tf CLAUDE.txt                                
+  ⎿  Failed to export conversation: EEXIST: file already exists, mkdir
+     'C:\Users\I757723\Desktop'
